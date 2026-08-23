@@ -6,6 +6,8 @@ from src.config.config_loader import ConfigLoader
 from src.http.routes.routeable import routeable
 from src.ui.settings_ui_constructor import SettingsUIConstructor
 import src.utils as utils
+from src.localization.locales import SUPPORTED_LOCALES
+from src.localization.translator import tr
 
 logger = utils.get_logger()
 
@@ -18,6 +20,37 @@ class StartUI(routeable):
 
     def create_main_block(self) -> gr.Blocks:
         with gr.Blocks(title="Mantella", fill_height=True, analytics_enabled=False, theme= self.__get_theme(), css=self.__load_css()) as main_block:
+
+            ui_language_config = (self._config.definitions.get_config_value_definition("ui_language"))
+
+            with gr.Row(elem_classes="ui-header"):
+                gr.Markdown("## Mantella")
+
+                language_selector = gr.Dropdown(
+                    choices=[
+                        (display_name, language_code)
+                        for language_code, display_name in SUPPORTED_LOCALES.items()
+                    ],
+                    value=ui_language_config.value,
+                    allow_custom_value=False,
+                    label=tr("ui.header.language", ui_language_config.value),
+                    container=False,
+                    scale=0,
+                    min_width=160,
+                    elem_classes="ui-language-selector"
+                )
+
+            def change_ui_language(language: str):
+                ui_language_config.value = language
+
+                gr.Info(tr("ui.header.restart_required", language))
+
+            language_selector.change(
+                fn=change_ui_language,
+                inputs=language_selector,
+                outputs=None,
+            )
+
             # with gr.Tab("Settings") as tabs:
             settings_page = self.__generate_settings_page()
             # with gr.Tab("Chat with NPCs", interactive=False):

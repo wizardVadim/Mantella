@@ -180,3 +180,12 @@
 .custom-footer a:hover {
     text-decoration: underline;
 }
+
+.ui-language-selector {
+    caret-color: transparent !important;
+}
+
+.ui-language-selector,
+.ui-language-selector * {
+    cursor: pointer !important;
+}

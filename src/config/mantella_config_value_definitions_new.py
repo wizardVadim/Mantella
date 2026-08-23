@@ -15,6 +15,7 @@ from src.config.definitions.tts_definitions import TTSDefinitions
 from src.config.definitions.vision_definitions import VisionDefinitions
 from src.config.definitions.action_definitions import ActionDefinitions
 from src.config.definitions.model_profile_definitions import ModelProfileDefinitions
+from src.config.definitions.ui_definitions import UIDefinitions
 import sys
 
 
@@ -211,5 +212,9 @@ class MantellaConfigValueDefinitionsNew:
         # other_category.add_config_value(OtherDefinitions.get_default_player_response_config_value())
         # other_category.add_config_value(OtherDefinitions.get_exit_on_first_exchange_config_value())
         result.add_base_group(other_category)
+
+        ui_category = ConfigValueGroup("UI", "User Interface", "Settings for the Mantella web interface.", on_value_change_callback, is_hidden=True)
+        ui_category.add_config_value(UIDefinitions.get_ui_language_config_value())
+        result.add_base_group(ui_category)
 
         return result
