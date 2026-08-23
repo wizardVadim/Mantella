@@ -1,5 +1,32 @@
 {
   "ui.header.title": "Mantella",
   "ui.header.language": "Interface language",
-  "ui.header.restart_required": "Settings saved. Restart Mantella, please."
+  "ui.header.restart_required": "Settings saved. Restart Mantella, please.",
+
+  "ui.section.Game": "Game",
+  "ui.section.LLM": "Large Language Model",
+  "ui.section.TTS": "Text-to-Speech",
+  "ui.section.STT": "Speech-to-Text",
+  "ui.section.Vision": "Vision",
+  "ui.section.Actions": "Actions",
+  "ui.section.Language": "Language",
+  "ui.section.Prompts": "Prompts",
+  "ui.section.Startup": "Startup",
+  "ui.section.Profiles": "Profiles",
+  "ui.section.Other": "Other",
+
+  "ui.footer.installation_guide": "Mantella Installation Guide",
+
+  "ui.common.default": "Default",
+  "ui.common.advanced": "Advanced",
+  "ui.common.browse": "Browse...",
+
+  "ui.setting.game.name": "Game",
+  "ui.setting.game.description": "Choose the game to run with Mantella.",
+  "ui.setting.skyrim_mod_folder.name": "Skyrim Special Edition: Path to Mantella Spell Mod",
+  "ui.setting.skyrimvr_mod_folder.name": "Skyrim VR: Path to Mantella Spell Mod",
+  "ui.setting.fallout4_mod_folder.name": "Fallout 4: Path to Mantella Gun Mod",
+  "ui.setting.fallout4vr_mod_folder.name": "Fallout 4 VR: Path to Mantella Gun Mod",
+  "ui.setting.fallout4_folder.name": "Fallout 4: Path to Fallout 4 Folder",
+  "ui.setting.fallout4vr_folder.name": "Fallout 4 VR: Path to Fallout 4 VR Folder"
 }

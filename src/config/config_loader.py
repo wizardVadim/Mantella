@@ -324,6 +324,8 @@ LLM parameter list must be valid JSON""")
             self.remove_mei_folders = self.__definitions.get_bool_value("remove_mei_folders")
 
             #UI
+            self.ui_language = self.__definitions.get_string_value("ui_language")
+
             self.auto_launch_ui = self.__definitions.get_bool_value("auto_launch_ui")
 
             self.play_startup_sound = self.__definitions.get_bool_value("play_startup_sound")

@@ -1,5 +1,32 @@
 {
   "ui.header.title": "Mantella",
   "ui.header.language": "Язык интерфейса",
-  "ui.header.restart_required": "Настройки сохранены. Пожалуйста, перезапустите Mantella."
+  "ui.header.restart_required": "Настройки сохранены. Пожалуйста, перезапустите Mantella.",
+
+  "ui.section.Game": "Игра",
+  "ui.section.LLM": "Языковая модель",
+  "ui.section.TTS": "Синтез речи",
+  "ui.section.STT": "Распознавание речи",
+  "ui.section.Vision": "Обработка изображений",
+  "ui.section.Actions": "Действия НПС",
+  "ui.section.Language": "Язык",
+  "ui.section.Prompts": "Промпты",
+  "ui.section.Startup": "Запуск",
+  "ui.section.Profiles": "Профили",
+  "ui.section.Other": "Другое",
+
+  "ui.footer.installation_guide": "Гайд по установке Mantella",
+
+  "ui.common.default": "Сбросить",
+  "ui.common.advanced": "Расширенные настройки",
+  "ui.common.browse": "Поиск...",
+
+  "ui.setting.game.name": "Игра",
+  "ui.setting.game.description": "Выберите игру, с которой будет запущена Mantella.",
+  "ui.setting.skyrim_mod_folder.name": "Skyrim Special Edition: путь к моду Mantella",
+  "ui.setting.skyrimvr_mod_folder.name": "Skyrim VR: путь к моду Mantella",
+  "ui.setting.fallout4_mod_folder.name": "Fallout 4: путь к моду Mantella",
+  "ui.setting.fallout4vr_mod_folder.name": "Fallout 4 VR: путь к моду Mantella",
+  "ui.setting.fallout4_folder.name": "Fallout 4: путь к папке игры",
+  "ui.setting.fallout4vr_folder.name": "Fallout 4 VR: путь к папке игры"
 }

@@ -16,7 +16,7 @@ class StartUI(routeable):
     BANNER = "docs/_static/img/mantella_banner.png"
     def __init__(self, config: ConfigLoader) -> None:
         super().__init__(config)
-        self.__constructor = SettingsUIConstructor()
+        self.__constructor = SettingsUIConstructor(config.ui_language)
 
     def create_main_block(self) -> gr.Blocks:
         with gr.Blocks(title="Mantella", fill_height=True, analytics_enabled=False, theme= self.__get_theme(), css=self.__load_css()) as main_block:
@@ -59,9 +59,9 @@ class StartUI(routeable):
             #     self.__generate_character_editor_page()
 
             with gr.Row(elem_classes="custom-footer"):
-                gr.HTML("""
+                gr.HTML(f"""
                     <div class="custom-footer">
-                        <a href="https://art-from-the-machine.github.io/Mantella/" target="_blank">Mantella Installation Guide</a>
+                        <a href="https://art-from-the-machine.github.io/Mantella/" target="_blank">{tr("ui.footer.installation_guide", self._config.ui_language)}</a>
                     </div>
                 """)
         return main_block
@@ -70,7 +70,7 @@ class StartUI(routeable):
         # with gr.Column() as settings:
         for cf in self._config.definitions.base_groups:
             if not cf.is_hidden:
-                with gr.Tab(cf.name):
+                with gr.Tab(tr(f"ui.section.{cf.identifier}", self._config.ui_language)):
                     cf.accept_visitor(self.__constructor)
         return None #settings
     

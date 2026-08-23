@@ -19,6 +19,8 @@ from src.config.types.config_value_int import ConfigValueInt
 from src.config.types.config_value_visitor import ConfigValueVisitor
 from src.ui.profile_ui_handler import ProfileUIHandler
 
+from src.localization.translator import tr
+
 class SettingUIComponents(NamedTuple):
     input_ui: Any
     error_message: gr.Markdown
@@ -36,12 +38,27 @@ class ModelConfig(TypedDict):
     model_list_getter: Callable[[str], Any]  # Function to get model list based on service
 
 class SettingsUIConstructor(ConfigValueVisitor):
-    def __init__(self) -> None:
+    def __init__(self, locale: str) -> None:
         super().__init__()
         self.__identifier_to_config_value: dict[str, ConfigValue] = {}
         self.__config_value_to_ui_element: dict[ConfigValue, Any] = {}
         self.__pending_shared_setting: SettingConfig | None = None
         self.__profile_handler: ProfileUIHandler | None = None
+        self.__locale: str = locale
+
+    def __localized_name(self, config_value: ConfigValue) -> str:
+        return tr(
+            f"ui.setting.{config_value.identifier}.name",
+            self.__locale,
+            config_value.name,
+        )
+
+    def __localized_description(self, config_value: ConfigValue) -> str:
+        return tr(
+            f"ui.setting.{config_value.identifier}.description",
+            self.__locale,
+            config_value.description or "",
+        )
 
     @property
     def config_value_to_ui_element(self) -> dict[ConfigValue, gr.Column]:
@@ -57,14 +74,15 @@ class SettingsUIConstructor(ConfigValueVisitor):
 
     def __create_tooltip(self, config_value: ConfigValue, is_second_setting: bool = False) -> str:
         """Creates the tooltip HTML for a config value"""
+        localized_name = self.__localized_name(config_value)
         constraints_html = (f'<p class="constraints">' + 
                           '<br>'.join(c.description for c in config_value.constraints) + 
                           '</p>' if config_value.constraints else '')
         tooltip_content = 'tooltip-content-right' if is_second_setting else 'tooltip-content-left'
-        description_html = (config_value.description or "").replace("\n", "<br>")
+        description_html = self.__localized_description(config_value).replace("\n", "<br>")
         
         return f"""
-        <div class="tooltip-container" role="tooltip" aria-label="{config_value.name} help">
+        <div class="tooltip-container" role="tooltip" aria-label="{localized_name} help">
             <span class="tooltip-icon" tabindex="0">?</span>
             <div class={tooltip_content}>
                 <p>{description_html}</p>
@@ -83,7 +101,7 @@ class SettingsUIConstructor(ConfigValueVisitor):
             for btn_label, btn_action in additional_buttons:
                 gr.Button(btn_label, variant="primary", size='sm').click(btn_action, outputs=input_ui)
             if not additional_buttons:
-                reset_button = gr.Button("Default", size='sm')
+                reset_button = gr.Button(tr("ui.common.default", self.__locale), size='sm')
                 if hasattr(reset_button, "_id"):
                     reset_button.click(
                         lambda: self.__on_reset_click(config_value, create_input_component), 
@@ -203,12 +221,13 @@ class SettingsUIConstructor(ConfigValueVisitor):
 
     def __construct_name_description_constraints(self, config_value: ConfigValue, is_second_setting: bool = False):
         with gr.Row():
-            description_html = (config_value.description or "").replace("\n", "<br>")
+            localized_name = self.__localized_name(config_value)
+            description_html = self.__localized_description(config_value).replace("\n", "<br>")
             tooltip_content = 'tooltip-content-right' if is_second_setting else 'tooltip-content-left'
             tooltip_html = f"""
             <div style="display: flex; align-items: center;">
-                <h3 style="margin: 0; font-size: 1.25em;">{config_value.name}</h3>
-                <div class="tooltip-container" role="tooltip" aria-label="{config_value.name} help">
+                <h3 style="margin: 0; font-size: 1.25em;">{localized_name}</h3>
+                <div class="tooltip-container" role="tooltip" aria-label="{localized_name} help">
                     <span class="tooltip-icon">?</span>
                     <div class={tooltip_content}>
                         <p>{description_html}</p>
@@ -240,7 +259,7 @@ class SettingsUIConstructor(ConfigValueVisitor):
                 cf.accept_visitor(self)
             
             if has_advanced_values:
-                with gr.Accordion(label="Advanced", open=False):
+                with gr.Accordion(label=tr("ui.common.advanced", self.__locale), open=False):
                     for cf in advanced_settings:
                         cf.accept_visitor(self)
 
@@ -268,7 +287,7 @@ class SettingsUIConstructor(ConfigValueVisitor):
     def visit_ConfigValueBool(self, config_value: ConfigValueBool):
         def create_input_component(raw_config_value: ConfigValue) -> gr.Checkbox:
             config_value = typing.cast(ConfigValueBool, raw_config_value)
-            return gr.Checkbox(label = config_value.name,
+            return gr.Checkbox(label=self.__localized_name(config_value),
                                     value=config_value.value,
                                     show_label=False, 
                                     container=False,elem_classes="checkboxelement")
@@ -411,5 +430,4 @@ class SettingsUIConstructor(ConfigValueVisitor):
             config_value = typing.cast(ConfigValuePath, raw_config_value)
             return gr.Text(value=config_value.value, show_label=False, container=False, max_lines=1)
         
-        self.__create_config_value_ui_element(config_value, create_input_component, True, True, True, [("Browse...", on_pick_click)])
-
+        self.__create_config_value_ui_element(config_value, create_input_component, True, True, True, [(tr("ui.common.browse", self.__locale), on_pick_click)])

@@ -18,11 +18,11 @@ def load_translations(locale: str) -> dict[str, Any]:
         return json.load(file)
 
 
-def tr(key: str, locale: str) -> str:
+def tr(key: str, locale: str, fallback: str | None = None) -> str:
     translations = load_translations(locale)
     default_translations = load_translations(DEFAULT_LOCALE)
 
     return translations.get(
         key,
-        default_translations.get(key, key),
+        default_translations.get(key, fallback if fallback is not None else key),
     )
