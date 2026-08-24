@@ -10,7 +10,17 @@ class ConfigValueTag(StrEnum):
 
 T = TypeVar('T')
 class ConfigValue(ABC, Generic[T]):
-    def __init__(self, identifier: str, name: str, description: str, default_value: T, constraints: list[ConfigValueConstraint[T]], is_hidden: bool, tags: list[ConfigValueTag] = []) -> None:
+    def __init__(
+        self, 
+        identifier: str, 
+        name: str, 
+        description: str, 
+        default_value: T, 
+        constraints: list[ConfigValueConstraint[T]], 
+        is_hidden: bool, 
+        tags: list[ConfigValueTag] = [], 
+        translation_params: dict[str, str | int] | None = None,
+    ) -> None:
         super().__init__()
         self.__identifier = identifier
         self.__name = name
@@ -20,6 +30,7 @@ class ConfigValue(ABC, Generic[T]):
         self.__constraints: list[ConfigValueConstraint[T]] = constraints
         self.__is_hidden: bool = is_hidden
         self.__tags: list[ConfigValueTag] = tags
+        self.__translation_params = translation_params or {}
         self._on_value_change_callback: Callable[..., Any] | None = None
     
     @property
@@ -59,6 +70,10 @@ class ConfigValue(ABC, Generic[T]):
     @property
     def tags(self) -> list[ConfigValueTag]:
         return self.__tags
+
+    @property
+    def translation_params(self) -> dict[str, str | int]:
+        return self.__translation_params
     
     def set_on_value_change_callback(self, on_value_change_callback: Callable[..., Any] | None):
         self._on_value_change_callback = on_value_change_callback

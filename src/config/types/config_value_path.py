@@ -13,8 +13,19 @@ class FileOrFolder(Enum):
     FOLDER = 2
 
 class ConfigValuePath(ConfigValue[str]):
-    def __init__(self, identifier: str, name: str, description: str, default_value: str, file_or_folder_that_must_be_present: str | None, constraints: list[ConfigValueConstraint[str]] = [], is_hidden: bool = False, tags: list[ConfigValueTag] = []):
-        super().__init__(identifier, name, description, default_value, constraints, is_hidden, tags)
+    def __init__(
+        self, 
+        identifier: str, 
+        name: str, 
+        description: str, 
+        default_value: str, 
+        file_or_folder_that_must_be_present: str | None, 
+        constraints: list[ConfigValueConstraint[str]] = [], 
+        is_hidden: bool = False, 
+        tags: list[ConfigValueTag] = [],
+        translation_params: dict[str, str | int] | None = None,
+    ):
+        super().__init__(identifier, name, description, default_value, constraints, is_hidden, tags, translation_params)
         self.__file_or_folder_that_must_be_present: str | None = file_or_folder_that_must_be_present
     
     @property
@@ -76,8 +87,17 @@ class ConfigValuePath(ConfigValue[str]):
     
     def does_value_cause_error(self, value_to_check: str) -> ConfigValueConstraintResult:
         if not os.path.exists(value_to_check):
-            return ConfigValueConstraintResult(f"The selected folder '{value_to_check}' for config value '{self.name}' does not exist!")
-
+            return ConfigValueConstraintResult(
+                error_message=(
+                    f"The selected path '{value_to_check}' for config value '{self.name}' does not exist."
+                ),
+                translation_key="ui.validation.path_not_found",
+                translation_params={
+                    "value_to_check": value_to_check,
+                    "value": self.name,
+                },
+            )
+            
         if self.__file_or_folder_that_must_be_present:             
             if self.Type_to_look_for == FileOrFolder.FILE:
                 path_plus_file_name = os.path.join(value_to_check, self.__file_or_folder_that_must_be_present)
@@ -91,7 +111,15 @@ class ConfigValuePath(ConfigValue[str]):
                     return ConfigValueConstraintResult(f"{value_to_check} is not a folder!")
                 folder_name = os.path.join(value_to_check, self.__file_or_folder_that_must_be_present)
                 if not os.path.exists(folder_name) or not os.path.isdir(folder_name):
-                    return ConfigValueConstraintResult(f"Selected folder {value_to_check} does not contain subfolder '{self.__file_or_folder_that_must_be_present}'! Please ensure your selected folder is correct.")
+                    return ConfigValueConstraintResult(
+                        error_message=f"Selected folder {value_to_check} does not contain subfolder '{self.__file_or_folder_that_must_be_present}'! Please ensure your selected folder is correct.",
+                        translation_key="ui.validation.subfolder_not_found",
+                        translation_params={
+                            "value_to_check": value_to_check,
+                            "value": self.__file_or_folder_that_must_be_present,
+                        },
+
+                    )
         
         result = super().does_value_cause_error(value_to_check)
         if not result.is_success:

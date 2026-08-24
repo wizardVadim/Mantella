@@ -18,17 +18,18 @@ def load_translations(locale: str) -> dict[str, Any]:
         return json.load(file)
 
 
-def tr(key: str, locale: str, fallback: str | None = None, *params: str | int) -> str:
+def tr(key: str, locale: str, fallback: str | None = None, **named_params: str | int) -> str:
     translations = load_translations(locale)
     default_translations = load_translations(DEFAULT_LOCALE)
 
-    text = translations.get(key, default_translations.get(key, fallback if fallback is not None else key))
+    text = translations.get(key, default_translations.get(key, fallback if fallback is not None else key),)
 
-    for i, param in enumerate(params):
-        text = tr_insert(text, i, param)
+    for name, param in named_params.items():
+        text = tr_insert(text, name, param)
 
     return text
 
 
-def tr_insert(text: str, param_number: int, param: str | int) -> str:
-    return text.replace(f"%{param_number}", str(param))
+def tr_insert(text: str, param_name: str | int, param: str | int) -> str:
+    value = str(param)
+    return text.replace(f"{{{param_name}}}", value)

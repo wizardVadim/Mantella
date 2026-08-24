@@ -23,10 +23,19 @@
 
   "ui.setting.game.name": "Игра",
   "ui.setting.game.description": "Выберите игру, с которой будет запущена Mantella.",
-  "ui.setting.skyrim_mod_folder.name": "Skyrim Special Edition: путь к моду Mantella",
-  "ui.setting.skyrimvr_mod_folder.name": "Skyrim VR: путь к моду Mantella",
-  "ui.setting.fallout4_mod_folder.name": "Fallout 4: путь к моду Mantella",
-  "ui.setting.fallout4vr_mod_folder.name": "Fallout 4 VR: путь к моду Mantella",
-  "ui.setting.fallout4_folder.name": "Fallout 4: путь к папке игры",
-  "ui.setting.fallout4vr_folder.name": "Fallout 4 VR: путь к папке игры"
+  "ui.setting.skyrim_mod_folder.name": "{game}: путь к моду Mantella Spell",
+  "ui.setting.skyrim_mod_folder.description": "Если вы используете Mod Organizer 2, нажмите ПКМ на мод Mantella в списке модов, далле нажмите \"Open in Explorer\".\nЕсли вы используете Vortex, укажите папку {game}\\Data.\nНапример: {example_path}.\nЕсли путь указан неверно, персонажи будут повторять одну и ту же реплику.",
+  "ui.setting.skyrimvr_mod_folder.name": "{game}: путь к моду Mantella Spell",
+  "ui.setting.skyrimvr_mod_folder.description": "Если вы используете Mod Organizer 2, нажмите ПКМ на мод Mantella в списке модов, далле нажмите \"Open in Explorer\".\nЕсли вы используете Vortex, укажите папку {game}\\Data.\nНапример: {example_path}.\nЕсли путь указан неверно, персонажи будут повторять одну и ту же реплику.",
+  "ui.setting.fallout4_mod_folder.name": "{game}: путь к моду Mantella Gun",
+  "ui.setting.fallout4_mod_folder.description": "Если вы используете Mod Organizer 2, нажмите ПКМ на мод Mantella в списке модов, далле нажмите \"Open in Explorer\".\nЕсли вы используете Vortex, укажите папку {game}\\Data.\nНапример: {example_path}.\nЕсли путь указан неверно, персонажи будут повторять одну и ту же реплику.",
+  "ui.setting.fallout4vr_mod_folder.name": "{game}: путь к моду Mantella Gun",
+  "ui.setting.fallout4vr_mod_folder.description": "Если вы используете Mod Organizer 2, нажмите ПКМ на мод Mantella в списке модов, далле нажмите \"Open in Explorer\".\nЕсли вы используете Vortex, укажите папку {game}\\Data.\nНапример: {example_path}.\nЕсли путь указан неверно, персонажи будут повторять одну и ту же реплику.",
+  "ui.setting.fallout4_folder.name": "{game}: путь к папке игры",
+  "ui.setting.fallout4_folder.description": "Путь к папке {game}, в которой находится исполняемый файл.\nПуть необходимо указывать только при включенной настройке `Vision` → `Use Game Screenshots`.",
+  "ui.setting.fallout4vr_folder.name": "{game}: путь к папке игры",
+  "ui.setting.fallout4vr_folder.description": "Путь к папке {game}, в которой находится исполняемый файл.\nПуть необходимо указывать только при включенной настройке `Vision` → `Use Game Screenshots`.",
+
+  "ui.validation.path_not_found": "Выбранная директория '{value_to_check}' для '{value}' не найдена!",
+  "ui.validation.subfolder_not_found": "Выбранная директория '{value_to_check}' не содержит дочерней папки '{value}'! Пожалуйста, проверьте выбранную директорию."
 }

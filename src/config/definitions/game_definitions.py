@@ -79,34 +79,106 @@ Please see here to learn where to set this value: https://art-from-the-machine.g
     def get_skyrim_mod_folder_config_value() -> ConfigValue:
         identifier = "skyrim_mod_folder"
         game_folder = "Skyrim Special Edition"
-        return ConfigValuePath(identifier, f"{game_folder}: Path to Mantella Spell Mod", GameDefinitions.MOD_FOLDER_DESCRIPTION.format(game_folder), "C:\\Modding\\MO2\\Skyrim\\mods\\Mantella","Sound",[GameDefinitions.ModFolderChecker(identifier)])
+
+        return ConfigValuePath(
+            identifier,
+            f"{game_folder}: Path to Mantella Spell Mod",
+            GameDefinitions.MOD_FOLDER_DESCRIPTION.format(game_folder),
+            r"C:\Modding\MO2\Skyrim\mods\Mantella",
+            "Sound",
+            [GameDefinitions.ModFolderChecker(identifier)],
+            translation_params={
+                "game": game_folder,
+                "example_path": (
+                    rf"C:\Games\Steam\steamapps\common\{game_folder}\Data"
+                ),
+            },
+        )
 
     @staticmethod
     def get_skyrimvr_mod_folder_config_value() -> ConfigValue:
         identifier = "skyrimvr_mod_folder"
         game_folder = "Skyrim VR"
-        return ConfigValuePath(identifier, f"{game_folder}: Path to Mantella Spell Mod", GameDefinitions.MOD_FOLDER_DESCRIPTION.format(game_folder), "C:\\Modding\\MO2\\SkyrimVR\\mods\\Mantella","Sound",[GameDefinitions.ModFolderChecker(identifier)])
+        return ConfigValuePath(
+            identifier, 
+            f"{game_folder}: Path to Mantella Spell Mod", 
+            GameDefinitions.MOD_FOLDER_DESCRIPTION.format(game_folder), 
+            "C:\\Modding\\MO2\\SkyrimVR\\mods\\Mantella",
+            "Sound",
+            [GameDefinitions.ModFolderChecker(identifier)],
+            translation_params={
+                "game": game_folder,
+                "example_path": (
+                    rf"C:\Games\Steam\steamapps\common\{game_folder}\Data"
+                ),
+            },
+        )
 
     @staticmethod
     def get_fallout4_mod_folder_config_value() -> ConfigValue:
         identifier = "fallout4_mod_folder"
         game_folder = "Fallout 4"
-        return ConfigValuePath(identifier, f"{game_folder}: Path to Mantella Gun Mod", GameDefinitions.MOD_FOLDER_DESCRIPTION.format(game_folder), "C:\\Modding\\MO2\\Fallout4\\mods\\Mantella","Sound",[GameDefinitions.ModFolderChecker(identifier)])
+        return ConfigValuePath(
+            identifier, 
+            f"{game_folder}: Path to Mantella Gun Mod", 
+            GameDefinitions.MOD_FOLDER_DESCRIPTION.format(game_folder), 
+            "C:\\Modding\\MO2\\Fallout4\\mods\\Mantella",
+            "Sound",[GameDefinitions.ModFolderChecker(identifier)],
+            translation_params={
+                "game": game_folder,
+                "example_path": (
+                    rf"C:\Games\Steam\steamapps\common\{game_folder}\Data"
+                ),
+            },
+        )
 
     @staticmethod
     def get_fallout4vr_mod_folder_config_value() -> ConfigValue:
         identifier = "fallout4vr_mod_folder"
         game_folder = "Fallout 4 VR"
-        return ConfigValuePath(identifier, f"{game_folder}: Path to Mantella Gun Mod", GameDefinitions.MOD_FOLDER_DESCRIPTION.format(game_folder), "C:\\Modding\\MO2\\Fallout4VR\\mods\\Mantella","Sound",[GameDefinitions.ProgramFilesChecker(game_folder), GameDefinitions.ModFolderChecker(identifier)])
+        return ConfigValuePath(
+            identifier, 
+            f"{game_folder}: Path to Mantella Gun Mod", 
+            GameDefinitions.MOD_FOLDER_DESCRIPTION.format(game_folder), 
+            "C:\\Modding\\MO2\\Fallout4VR\\mods\\Mantella",
+            "Sound",[GameDefinitions.ProgramFilesChecker(game_folder), 
+            GameDefinitions.ModFolderChecker(identifier)],
+            translation_params={
+                "game": game_folder,
+                "example_path": (
+                    rf"C:\Games\Steam\steamapps\common\{game_folder}\Data"
+                ),
+            },
+        )
     
     @staticmethod
     def get_fallout4_folder_config_value() -> ConfigValue:
         description = """The filepath of the Fallout 4 (desktop) directory where the executable is located.
                         This path only needs to be set if `Vision`->`Use Game Screenshots` is enabled."""
-        return ConfigValuePath("fallout4_folder", "Fallout 4: Path to Fallout 4 Folder", description, "C:\\Games\\Steam\\steamapps\\common\\Fallout 4", "Fallout4.exe", [GameDefinitions.ProgramFilesChecker("Fallout4")], tags=[ConfigValueTag.advanced])
+        return ConfigValuePath(
+            "fallout4_folder", 
+            "Fallout 4: Path to Fallout 4 Folder", 
+            description, 
+            "C:\\Games\\Steam\\steamapps\\common\\Fallout 4", "Fallout4.exe", 
+            [GameDefinitions.ProgramFilesChecker("Fallout4")], 
+            tags=[ConfigValueTag.advanced],
+            translation_params={
+                "game": "Fallout 4",
+            },
+        )
 
     @staticmethod
     def get_fallout4vr_folder_config_value() -> ConfigValue:
         fallout4vr_folder_description = """The filepath of the Fallout 4 VR directory where the executable is located.
-                        This path only needs to be set if `Vision`->`Use Game Screenshots` is enabled."""
-        return ConfigValuePath("fallout4vr_folder", "Fallout 4 VR: Path to Fallout 4 VR Folder", fallout4vr_folder_description, "C:\\Games\\Steam\\steamapps\\common\\Fallout4VR","Fallout4VR.exe",[GameDefinitions.ProgramFilesChecker("Fallout4VR")], tags=[ConfigValueTag.advanced])
+            This path only needs to be set if `Vision`->`Use Game Screenshots` is enabled."""
+        return ConfigValuePath(
+            "fallout4vr_folder", 
+            "Fallout 4 VR: Path to Fallout 4 VR Folder", 
+            fallout4vr_folder_description, 
+            "C:\\Games\\Steam\\steamapps\\common\\Fallout4VR","Fallout4VR.exe",
+            [GameDefinitions.ProgramFilesChecker("Fallout4VR")], 
+            tags=[ConfigValueTag.advanced],
+            translation_params={
+                "game": "Fallout 4 VR",
+            },
+        )

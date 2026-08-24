@@ -23,10 +23,19 @@
 
   "ui.setting.game.name": "Game",
   "ui.setting.game.description": "Choose the game to run with Mantella.",
-  "ui.setting.skyrim_mod_folder.name": "Skyrim Special Edition: Path to Mantella Spell Mod",
-  "ui.setting.skyrimvr_mod_folder.name": "Skyrim VR: Path to Mantella Spell Mod",
-  "ui.setting.fallout4_mod_folder.name": "Fallout 4: Path to Mantella Gun Mod",
-  "ui.setting.fallout4vr_mod_folder.name": "Fallout 4 VR: Path to Mantella Gun Mod",
-  "ui.setting.fallout4_folder.name": "Fallout 4: Path to Fallout 4 Folder",
-  "ui.setting.fallout4vr_folder.name": "Fallout 4 VR: Path to Fallout 4 VR Folder"
+  "ui.setting.skyrim_mod_folder.name": "{game}: Path to Mantella Spell Mod",
+  "ui.setting.skyrim_mod_folder.description": "If you are using Mod Organizer 2, right-click the Mantella mod in your mod list and select \"Open in Explorer\".\nIf you are using Vortex, specify the {game}\\Data folder.\nFor example: {example_path}.\nIf this path is incorrect, NPCs will repeat the same voice line.",
+  "ui.setting.skyrimvr_mod_folder.name": "{game}: Path to Mantella Spell Mod",
+  "ui.setting.skyrimvr_mod_folder.description": "If you are using Mod Organizer 2, right-click the Mantella mod in your mod list and select \"Open in Explorer\".\nIf you are using Vortex, specify the {game}\\Data folder.\nFor example: {example_path}.\nIf this path is incorrect, NPCs will repeat the same voice line.",
+  "ui.setting.fallout4_mod_folder.name": "{game}: Path to Mantella Gun Mod",
+  "ui.setting.fallout4_mod_folder.description": "If you are using Mod Organizer 2, right-click the Mantella mod in your mod list and select \"Open in Explorer\".\nIf you are using Vortex, specify the {game}\\Data folder.\nFor example: {example_path}.\nIf this path is incorrect, NPCs will repeat the same voice line.",
+  "ui.setting.fallout4vr_mod_folder.name": "{game}: Path to Mantella Gun Mod",
+  "ui.setting.fallout4vr_mod_folder.description": "If you are using Mod Organizer 2, right-click the Mantella mod in your mod list and select \"Open in Explorer\".\nIf you are using Vortex, specify the {game}\\Data folder.\nFor example: {example_path}.\nIf this path is incorrect, NPCs will repeat the same voice line.",
+  "ui.setting.fallout4_folder.name": "{game}: Path to Game Folder",
+  "ui.setting.fallout4_folder.description": "The path to the {game} directory containing the game executable.\nThis path only needs to be specified when `Vision` → `Use Game Screenshots` is enabled.",
+  "ui.setting.fallout4vr_folder.name": "{game}: Path to Game Folder",
+  "ui.setting.fallout4vr_folder.description": "The path to the {game} directory containing the game executable.\nThis path only needs to be specified when `Vision` → `Use Game Screenshots` is enabled.",
+
+  "ui.validation.path_not_found": "The selected folder '{value_to_check}' for config value '{value}' does not exist!",
+  "ui.validation.subfolder_not_found": "Selected folder '{value_to_check}' does not contain subfolder '{value}'! Please ensure your selected folder is correct."
 }

@@ -51,6 +51,7 @@ class SettingsUIConstructor(ConfigValueVisitor):
             f"ui.setting.{config_value.identifier}.name",
             self.__locale,
             config_value.name,
+            **config_value.translation_params,
         )
 
     def __localized_description(self, config_value: ConfigValue) -> str:
@@ -58,6 +59,21 @@ class SettingsUIConstructor(ConfigValueVisitor):
             f"ui.setting.{config_value.identifier}.description",
             self.__locale,
             config_value.description or "",
+            **config_value.translation_params,
+        )
+
+    def __localized_error(
+        self,
+        result: ConfigValueConstraintResult,
+    ) -> str:
+        if result.translation_key is None:
+            return result.error_message
+
+        return tr(
+            result.translation_key,
+            self.__locale,
+            result.error_message,
+            **result.translation_params,
         )
 
     @property
@@ -198,15 +214,30 @@ class SettingsUIConstructor(ConfigValueVisitor):
         self.__create_single_setting(current_setting)
 
     T = TypeVar('T')
-    def __on_change(self, config_value: ConfigValue[T], new_value: T) -> gr.Markdown:
-        result: ConfigValueConstraintResult = config_value.does_value_cause_error(new_value)
+
+    def __on_change(
+        self,
+        config_value: ConfigValue[T],
+        new_value: T,
+    ) -> gr.Markdown:
+        result = config_value.does_value_cause_error(new_value)
+
         if result.is_success:
             if config_value.value != new_value:
                 config_value.value = new_value
-                logger.info(f'{config_value.name} set to {config_value.value}')
-            return self.__construct_error_message_panel('', is_visible=False)
-        else:
-            return self.__construct_error_message_panel(result.error_message, is_visible=True)
+                logger.info(
+                    f"{config_value.name} set to {config_value.value}"
+                )
+
+            return self.__construct_error_message_panel(
+                "",
+                is_visible=False,
+            )
+
+        return self.__construct_error_message_panel(
+            self.__localized_error(result),
+            is_visible=True,
+        )
      
     def __construct_error_message_panel(self, message: str, is_visible: bool) -> gr.Markdown:
         markdown = gr.Markdown(value=message, visible=is_visible, elem_classes="constraint-violation")
@@ -238,10 +269,19 @@ class SettingsUIConstructor(ConfigValueVisitor):
             """
             gr.HTML(tooltip_html)
         
-    def __construct_initial_error_message(self, config_value: ConfigValue) -> gr.Markdown:
-        result: ConfigValueConstraintResult = config_value.does_value_cause_error(config_value.value)
-        return self.__construct_error_message_panel(result.error_message, is_visible=not result.is_success)
+    def __construct_initial_error_message(
+        self,
+        config_value: ConfigValue,
+    ) -> gr.Markdown:
+        result = config_value.does_value_cause_error(
+            config_value.value,
+        )
 
+        return self.__construct_error_message_panel(
+            self.__localized_error(result),
+            is_visible=not result.is_success,
+        )
+        
     def visit_ConfigValueGroup(self, config_value: ConfigValueGroup):
         if not config_value.is_hidden:            
             has_advanced_values = False

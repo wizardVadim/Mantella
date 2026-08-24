@@ -3,8 +3,10 @@ from typing import Generic, TypeVar
 
 
 class ConfigValueConstraintResult:
-    def __init__(self, error_message: str | None = None) -> None:
+    def __init__(self, error_message: str | None = None, translation_key: str | None = None, translation_params: dict[str, str | int] | None = None) -> None:
         self.__error_message: str | None = error_message
+        self.__translation_key = translation_key
+        self.__translation_params = translation_params or {}
 
     @property
     def is_success(self) -> bool:
@@ -16,6 +18,14 @@ class ConfigValueConstraintResult:
             return self.__error_message
         else:
             return ""
+
+    @property
+    def translation_key(self) -> str | None:
+        return self.__translation_key
+
+    @property
+    def translation_params(self) -> dict[str, str | int]:
+        return self.__translation_params
 
 T = TypeVar('T')
 class ConfigValueConstraint(Generic[T], ABC):
